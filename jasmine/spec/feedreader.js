@@ -29,7 +29,7 @@ $(function() {
 
         it('have urls', function() {
             allFeeds.forEach(function(feed) {
-                expect(feed.url).toBeDefined();
+                expect(feed.url).not.toBe(0);
                 // If string is empty, it will return false and
                 // fail the test
                 expect(feed.url).not.toBe(false);
@@ -39,7 +39,7 @@ $(function() {
 
         it('have names', function() {
             allFeeds.forEach(function(feed) {
-                expect(feed.name).toBeDefined();
+                expect(feed.name.length).not.toBe(0);
                 expect(feed.name).not.toBe(false);
             });
         });
@@ -73,19 +73,14 @@ $(function() {
 
     describe('Initial Entries', function() {
 
-         beforeEach(function(done) {
-            window.loadFeed(0, function() {
-                done();
-            });
-         });
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
 
          it('should contain at least one entry', function(done) {
-            // Grab the feed div and check for an article tag with
-            // the class of 'entry'
-            var feed = document.getElementsByClassName('feed')[0];
-            var entry = feed.getElementsByTagName('article')[0];
+            // Check for a .entry element within the .feed container.
+            var entry = document.getElementsByClassName('feed')[0].getElementsByClassName('entry')[0];
 
-            expect(feed).toBeDefined();
             expect(entry).toBeDefined();
             expect(entry.className).toContain('entry');
             done();
@@ -97,7 +92,7 @@ $(function() {
 
         beforeEach(function(done) {
             // Load feed index 0.
-            window.loadFeed(0, function() {
+            loadFeed(0, function() {
                 originalContent = document.getElementsByClassName('feed')[0].innerHTML;
                 done();
             });
@@ -106,7 +101,7 @@ $(function() {
         it('should change when a new feed is loaded', function(done) {
             var newContent;
             // Load feed index 1 to compare to index 0.
-            window.loadFeed(1, function() {
+            loadFeed(1, function() {
                 newContent = document.getElementsByClassName('feed')[0].innerHTML;
 
                 // Check that both Contents are defined.
