@@ -29,18 +29,16 @@ $(function() {
 
         it('have urls', function() {
             allFeeds.forEach(function(feed) {
-                expect(feed.url).not.toBe(0);
-                // If string is empty, it will return false and
-                // fail the test
-                expect(feed.url).not.toBe(false);
+                expect(feed.url).toBeDefined;
+                expect(feed.url.length).not.toBe(0);
             });
         });
 
 
         it('have names', function() {
             allFeeds.forEach(function(feed) {
+                expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0);
-                expect(feed.name).not.toBe(false);
             });
         });
     });
